@@ -85,11 +85,9 @@ GEM
     connection_pool (2.4.1)
     crass (1.0.6)
     date (3.3.4)
-    debug (1.9.1)
-      irb (~> 1.10)
-      reline (>= 0.3.8)
     drb (2.2.0)
       ruby2_keywords
+    e2mmap (0.1.0)
     erubi (1.12.0)
     et-orbi (1.2.7)
       tzinfo
@@ -144,14 +142,14 @@ GEM
     rabl (0.16.1)
       activesupport (>= 2.3.14)
     racc (1.7.3)
-    rack (3.0.8)
-    rack-session (2.0.0)
-      rack (>= 3.0.0)
+    rack (2.2.8)
+    rack-session (1.0.2)
+      rack (< 3)
     rack-test (2.1.0)
       rack (>= 1.3)
-    rackup (2.1.0)
-      rack (>= 3)
-      webrick (~> 1.8)
+    rackup (1.0.0)
+      rack (< 3)
+      webrick
     rails (7.1.3)
       actioncable (= 7.1.3)
       actionmailbox (= 7.1.3)
@@ -184,26 +182,27 @@ GEM
     rake (13.1.0)
     rdoc (6.6.2)
       psych (>= 4.0.0)
-    redis (5.0.8)
-      redis-client (>= 0.17.0)
-    redis-client (0.19.1)
-      connection_pool
+    redis (4.8.1)
     reline (0.4.2)
       io-console (~> 0.5)
     ruby2_keywords (0.0.5)
     rufus-scheduler (3.9.1)
       fugit (~> 1.1, >= 1.1.6)
-    sidekiq (7.2.1)
-      concurrent-ruby (< 2)
-      connection_pool (>= 2.3.0)
-      rack (>= 2.2.4)
-      redis-client (>= 0.19.0)
-    sidekiq-scheduler (5.0.3)
+    sidekiq (6.5.12)
+      connection_pool (>= 2.2.5, < 3)
+      rack (~> 2.0)
+      redis (>= 4.5.0, < 5)
+    sidekiq-scheduler (3.2.2)
+      e2mmap
+      redis (>= 3, < 5)
       rufus-scheduler (~> 3.2)
-      sidekiq (>= 6, < 8)
+      sidekiq (>= 3)
+      thwait
       tilt (>= 1.4.0)
     stringio (3.1.0)
     thor (1.3.0)
+    thwait (0.2.0)
+      e2mmap
     tilt (2.3.0)
     timeout (0.4.1)
     tzinfo (2.0.6)
@@ -219,7 +218,6 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
-  debug
   oj
   pg
   pry
@@ -227,9 +225,8 @@ DEPENDENCIES
   rabl
   rails (~> 7.1.3)
   redis (>= 4.0.1)
-  sidekiq
-  sidekiq-scheduler
-  tzinfo-data
+  sidekiq (~> 6.4)
+  sidekiq-scheduler (~> 3.0)
 
 RUBY VERSION
    ruby 3.2.3p157

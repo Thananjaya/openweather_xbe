@@ -1,5 +1,6 @@
 class PollutionVariable < ApplicationRecord
   belongs_to :location
+  validates_uniqueness_of :measured_time, scope: :location_id
 
   AQI_STATUS = {
     1 => 'good',

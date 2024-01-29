@@ -16,7 +16,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_061318) do
 
   create_table "locations", force: :cascade do |t|
     t.string "name"
-    t.string "lattitude"
+    t.string "latitude"
     t.string "longitude"
     t.integer "aqi_average"
     t.datetime "created_at", null: false
@@ -25,8 +25,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_061318) do
 
   create_table "pollution_variables", force: :cascade do |t|
     t.integer "aqi"
-    t.jsonb "components"
-    t.datetime "measured_time"
+    t.jsonb "pollutant_concentrations"
+    t.string "measured_time"
     t.bigint "location_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
