@@ -24,8 +24,14 @@ class LocationsController < ApplicationController
 		end
 	end
 	
-	def location_metrics
+	def air_quality_metrics
 		average_aqi_per_month = @location.pollution_variables.where('cast(measured_at as timestamp) between ? and ?', 1.month.ago, DateTime.now)
+		render json: { data: 
+			{
+				average_aqi_per_month: average_aqi_per_month.average(:aqi).to_i,
+				average_aqi_per_location: @location.aqi_average
+			}
+		}
 	end
 
 	private

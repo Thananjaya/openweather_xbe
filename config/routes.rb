@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   resources :locations, only: [:create] do
-    get :current_air_pollution_data, on: :collection
+    collection do
+      get :current_air_pollution_data
+      get :air_quality_metrics
+    end
   end
 end
