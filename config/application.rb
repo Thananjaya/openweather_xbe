@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require "sidekiq-scheduler"
 require "net/http"
 require "uri"
 
