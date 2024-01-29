@@ -15,13 +15,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_061318) do
   enable_extension "plpgsql"
 
   create_table "locations", force: :cascade do |t|
-    t.string "name"
+    t.string "city"
+    t.string "state"
     t.string "latitude"
     t.string "longitude"
     t.integer "aqi_average"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_locations_on_name"
+    t.index ["city"], name: "index_locations_on_city"
+    t.index ["state"], name: "index_locations_on_state"
   end
 
   create_table "pollution_variables", force: :cascade do |t|

@@ -3,7 +3,7 @@ class LocationsController < ApplicationController
 
 	def create
 		data = Openweather.new("http://api.openweathermap.org/geo/1.0/direct?q=#{params[:name]}&limit=1&appid=699c61e67d8661a88790e8a50fec331d").fetch_data.first
-		location = Location.new(name: data['name'], latitude: data['lat'], longitude: data['lon'])
+		location = Location.new(city: data['name'], state: data['state'], latitude: data['lat'], longitude: data['lon'])
 		if location.save
 			render json: { success: true, location: location.json_data }, status: :created
 		else
@@ -26,10 +26,12 @@ class LocationsController < ApplicationController
 	
 	def air_quality_metrics
 		average_aqi_per_month = @location.pollution_variables.where('cast(measured_at as timestamp) between ? and ?', 1.month.ago, DateTime.now)
+		average_aqi_per_state = Location.where(state: @location.state).average(:aqi_average)
 		render json: { data: 
 			{
 				average_aqi_per_month: average_aqi_per_month.average(:aqi).to_i,
-				average_aqi_per_location: @location.aqi_average
+				average_aqi_per_location: @location.aqi_average,
+				average_aqi_per_state: average_aqi_per_state
 			}
 		}
 	end
@@ -37,6 +39,6 @@ class LocationsController < ApplicationController
 	private
 
 	def find_location
-		@location = Location.where('lower(name)=?', params[:name].downcase).first
+		@location = Location.where('lower(city)=?', params[:name].downcase).first
 	end
 end
