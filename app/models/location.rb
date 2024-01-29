@@ -14,10 +14,20 @@ class Location < ApplicationRecord
 		pollution_variable = pollution_variables.new(
 			aqi: data['main']['aqi'],
 			pollutant_concentrations: data['components'],
-			measured_time: data['dt']
+			measured_at: Time.at(data['dt']).to_s
 		)
-		if pollution_variable.save && self.update(aqi_average: (aqi_average + pollution_variable.aqi)/pollution_variables.count)
-			return { success: true, location: self, pollution_variable: pollution_variable }
+		if pollution_variable.save && self.update(aqi_average: (pollution_variables.sum(:aqi)/pollution_variables.count))
+			return { success: true, location: self.json_data, current_pollution_status: pollution_variable.json_data }
 		end
+	end
+
+	def json_data
+		{
+			name: name,
+			latitude: latitude,
+			longitude: longitude,
+			aqi_average: aqi_average,
+			average_aqi_quality: PollutionVariable::AQI_QUALITY[aqi_average]
+		}
 	end
 end

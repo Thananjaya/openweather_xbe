@@ -21,12 +21,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_29_061318) do
     t.integer "aqi_average"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_locations_on_name"
   end
 
   create_table "pollution_variables", force: :cascade do |t|
     t.integer "aqi"
     t.jsonb "pollutant_concentrations"
-    t.string "measured_time"
+    t.string "measured_at"
     t.bigint "location_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

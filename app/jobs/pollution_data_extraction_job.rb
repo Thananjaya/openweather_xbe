@@ -7,7 +7,7 @@ class PollutionDataExtractionJob < ApplicationJob
 			location.pollution_variables.create!(
 				aqi: data['main']['aqi'],
 				pollutant_concentrations: data['components'],
-				measured_time: data['dt']
+				measured_at: Time.at(data['dt']).to_s
 			)
 			count += 1
 			aqi_value += data['main']['aqi']
