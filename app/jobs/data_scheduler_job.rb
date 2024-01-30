@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Background job, powered by sidekiq and sidekiq scheduler, to save pollution variables
 class DataSchedulerJob < ApplicationJob
   def perform
     Location.all.each do |location|
